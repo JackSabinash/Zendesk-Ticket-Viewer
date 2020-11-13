@@ -36,7 +36,8 @@ public class TicketViewer {
 
     } while (!ticketJSON.isNull("next_page"));
 
-    tickets.printMap();
+    tickets.printPage(1);
+    tickets.printTicket(101);
   }
 
   /*
@@ -92,13 +93,15 @@ public class TicketViewer {
       ticket.setSubject(arr.getJSONObject(i).getString("subject"));
       ticket.setDescription(arr.getJSONObject(i).getString("description"));
       ticket.setStatus(arr.getJSONObject(i).getString("status"));
-      ticket.setRequesterId(arr.getJSONObject(i).getInt("requester_id"));
+      ticket.setRequesterId(arr.getJSONObject(i).getLong("requester_id"));
 
       JSONArray jTagArr = arr.getJSONObject(i).getJSONArray("tags");
       String[] tagArr = new String[jTagArr.length()];
       for (int j = 0; j < jTagArr.length(); ++j) {
+        
         tagArr[j] = (String) jTagArr.getString(j);
       }
+      ticket.setTags(tagArr);
 
       ticket.setHasIncidents(arr.getJSONObject(i).getBoolean("has_incidents"));
       

@@ -13,7 +13,7 @@ public class Ticket {
   private String subject;
   private String description;
   private String status;
-  private Integer requester_id;
+  private Long requester_id;
   private String[] tags;
   private Boolean has_incidents;
   
@@ -57,11 +57,11 @@ public class Ticket {
     this.status = status;
   }
 
-  public Integer getRequesterId() {
+  public Long getRequesterId() {
     return requester_id;
   }
 
-  public void setRequesterId(Integer requester_id) {
+  public void setRequesterId(Long requester_id) {
     this.requester_id = requester_id;
   }
 
