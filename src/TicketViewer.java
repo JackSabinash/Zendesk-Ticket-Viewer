@@ -8,6 +8,14 @@ import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/*
+ * Class TicketViewer:
+ * 
+ * This class is the TicketViewer driver class which handles running the main application.
+ * 
+ * This class sends the http request and parses the lines returned.
+ * 
+ */
 public class TicketViewer {
 
   /*

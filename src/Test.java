@@ -1,4 +1,9 @@
-
+/*
+ * Class Test
+ * 
+ * This class is a testing class for various methods in this project
+ * 
+ */
 public class Test {
 
   public static void main(String[] args) {
@@ -8,8 +13,12 @@ public class Test {
     else if (!testTicketHash()) {
       System.out.print("TicketHash Object testing has failed");
     }
+    else if (!emptyTicketHash()) {
+      System.out.print("TicketHash Object testing has failed");
+    }
+    
     else {
-      System.out.print("All tests have passed!");
+      System.out.print("\nAll tests have passed!");
     }
   }
   
@@ -89,11 +98,32 @@ public class Test {
       return false;
     }
     
-    // check if prints are good.
-//    tickets.printTicket(1);
-//    tickets.printPage(1);
+    /*
+     * Check using print methods.
+     */
+      // should print the more info of the ticket with info above
+      //tickets.printTicket(1);
     
+      // should print a ticket page with only the 1 ticket
+      //tickets.printPage(1);
+      
+    return true;
+  }
+  
+  public static boolean emptyTicketHash() {
+    TicketHash tickets = new TicketHash();
+   
+    if (tickets.getSize() != 0) {
+      return false;
+    }
     
+    /*
+     * Check using print methods.
+     */
+      // should print a ticket page with only the no ticket
+    
+      //tickets.printPage(1);
+       
     return true;
   }
 }
