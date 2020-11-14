@@ -1,6 +1,4 @@
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 /*
  * Class TicketHash:
@@ -28,12 +26,6 @@ public class TicketHash {
     return tickets.size();
   }
   
-  // Testing Method to check if HashMap is getting the correct values
-  public void printMap() {
-    for (int i = 1; i < tickets.size() + 1; ++i) {
-      System.out.println(i + ": " + tickets.get(i).getSubject());
-    }
-  }
   
   // Prints pages of 25 tickets at a time for specified page num
   public void printPage(int pageNum) {
@@ -52,9 +44,17 @@ public class TicketHash {
     }
   }
   
+  /*
+   * This method takes in a ticket id and prints out the extra information on about the ticket
+   * 
+   * Parameters: 
+   * int id = the id of the page to print more information
+   * 
+   * returns: Nothing
+   */
   public void printTicket(int id) {
     if (!tickets.containsKey(id)) {
-      System.out.print("Ticket " + id + "does not exist!");
+      System.out.println("Ticket " + id + " does not exist!");
     }
     else {
       System.out.println("-------------- Ticket " + id + " --------------");

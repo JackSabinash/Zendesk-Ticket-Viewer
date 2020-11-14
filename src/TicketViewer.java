@@ -4,40 +4,109 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
+import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class TicketViewer {
 
+  /*
+   * This is the main application that runs.
+   * 
+   */
   public static void main(String[] args) {
     
-    // String auth = "";
-
-    // encode the string into base64 encoding
-    // String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
+    Scanner sc = new Scanner(System.in);
     
-    // hard code for testing purposes
-    String encodedAuth = "Basic anNhYmluYXNoQHdpc2MuZWR1Om1lU3JhbS1tb3poeTctYmVjbW96";
-    String endPoint = "https://wisc3265.zendesk.com/api/v2/tickets.json";
+    // Authentication steps
+    System.out.println("Welcome to Zendesk Ticket Viewer");
+    System.out.println("--------------------------------------------------------\n");
+    System.out.println("Please enter the Zendesk company Username:");
+    String endPoint = sc.nextLine();
+    endPoint = "https://" + endPoint + ".zendesk.com/api/v2/tickets.json";
+    System.out.println("Please enter the email address:");
+    String auth = sc.nextLine();
+    System.out.println("Please enter the password:");
+    auth = auth + ":" + sc.nextLine();
+    String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
     
     // Create the TicketHash for parser to store data
     TicketHash tickets = new TicketHash();
 
     JSONObject ticketJSON;
     String line;
-
     // Start on page 1 of tickets
     int page = 1;
     do {
       line = getData(page, encodedAuth, endPoint);
+      
+      if (line == null) {
+        System.out.println("Thank you for using Zendesk Ticket Viewer!");
+        sc.close();
+        return;
+      }
       ticketJSON = new JSONObject(line);
       parse(ticketJSON, tickets);
       ++page;
 
     } while (!ticketJSON.isNull("next_page"));
 
-    tickets.printPage(1);
-    tickets.printTicket(101);
+    // Input handling and menu for UI CLI
+    int pageNum = 1;
+    int maxPage = (tickets.getSize() / 25) + 1;
+    tickets.printPage(pageNum);
+    loop: while(true) {
+      System.out.println("Menu:");
+      System.out.println("'n': Next Page \n'b': Previous Page\nTicket ID (1-" + tickets.getSize() + ") for more info\n'e': Exit.");
+      
+      if (sc.hasNextInt()) {
+        int id = sc.nextInt();
+        sc.nextLine();
+        tickets.printTicket(id);
+        continue;
+      }
+      else {
+        String s = sc.nextLine();
+        
+        switch(s) {
+          case "n": {
+            pageNum++;
+            if (pageNum > maxPage) {
+              System.out.println("You are on the last page, please type 'b' to see the previous page.");
+              pageNum = maxPage;
+            } 
+            else {
+              tickets.printPage(pageNum);
+            }
+            continue;
+          }  
+          
+          case "b": {
+            pageNum--;
+            if (pageNum < 1) {
+              System.out.println("You are on page 1, please type 'n' to see the next page.");
+              pageNum = 1;
+            } 
+            else {
+              tickets.printPage(pageNum);
+            }   
+            continue;
+          }
+          
+          case "e": {
+            System.out.println("Thank you for using Zendesk Ticket Viewer!");
+            break loop;
+          }
+            
+          default: {
+            System.out.println("Inavalid Input: Please enter a valid input.");
+            continue;  
+          }
+        }
+      }
+      
+    }
+    sc.close(); 
   }
 
   /*
@@ -63,7 +132,8 @@ public class TicketViewer {
       return line;
 
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println(e.getMessage());
+      System.out.println("Connection or authentication has failed. Please try again.");
 
     }
     return null;
