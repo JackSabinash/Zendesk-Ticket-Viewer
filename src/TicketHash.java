@@ -5,8 +5,7 @@ import java.util.HashMap;
  * 
  * This class is a HashMap to hold the ticket objects by their id
  * 
- * Each entry in the HashMap has a key (Ticket ID) and Object (Ticket)
- * HashMap<Integer, Ticket>
+ * Each entry in the HashMap has a key (Ticket ID) and Object (Ticket) HashMap<Integer, Ticket>
  * 
  */
 public class TicketHash {
@@ -21,42 +20,41 @@ public class TicketHash {
   public void addTicket(Integer id, Ticket ticket) {
     tickets.put(id, ticket);
   }
-  
+
+  // return the size of the HashMap
   public int getSize() {
     return tickets.size();
   }
-  
-  
+
+
   // Prints pages of 25 tickets at a time for specified page num
   public void printPage(int pageNum) {
-    
+
     int ticketStart = (((pageNum - 1) * 25) + 1);
     int ticketEnd = ((pageNum) * 25) + 1;
-    
+
     // If the ticket end exceeds the last ticket set to the last ticket
     if (ticketEnd > getSize() + 1) {
       ticketEnd = getSize() + 1;
     }
-      
+
     System.out.println("Page: " + pageNum);
-    for(int i = ticketStart; i < ticketEnd; ++i) {
+    for (int i = ticketStart; i < ticketEnd; ++i) {
       System.out.println("Ticket " + i + ": " + tickets.get(i).getSubject());
     }
   }
-  
+
   /*
    * This method takes in a ticket id and prints out the extra information on about the ticket
    * 
-   * Parameters: 
-   * int id = the id of the page to print more information
+   * Parameters: int id = the id of the page to print more information
    * 
    * returns: Nothing
    */
   public void printTicket(int id) {
     if (!tickets.containsKey(id)) {
       System.out.println("Ticket " + id + " does not exist!");
-    }
-    else {
+    } else {
       System.out.println("-------------- Ticket " + id + " --------------");
       System.out.println();
       System.out.println("Requested By: " + tickets.get(id).getRequesterId());
@@ -68,11 +66,10 @@ public class TicketHash {
       System.out.print("Tags: ");
       for (int i = 0; i < tickets.get(id).getTags().length; ++i) {
         System.out.print(tickets.get(id).getTags()[i]);
-        
+
         if (i == tickets.get(id).getTags().length - 1) {
           System.out.println();
-        }
-        else {
+        } else {
           System.out.print(", ");
         }
       }

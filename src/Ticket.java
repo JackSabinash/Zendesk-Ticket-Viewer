@@ -16,7 +16,7 @@ public class Ticket {
   private Long requester_id;
   private String[] tags;
   private Boolean has_incidents;
-  
+
   public String getCreatedAt() {
     return created_at;
   }
