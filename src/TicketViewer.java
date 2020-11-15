@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * 
  * This class is the TicketViewer driver class which handles running the main application.
  * 
- * This class sends the http request and parses the lines returned.
+ * This class sends the HTTP request and parses the lines returned.
  * 
  */
 public class TicketViewer {
@@ -41,7 +41,7 @@ public class TicketViewer {
     auth = auth + ":" + sc.nextLine();
     String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
-    // Start on page 1 -> send http requests and parse until no more data.
+    // Start on page 1 -> send HTTP requests and parse until no more data.
     int page = 1;
     do {
       line = getData(page, encodedAuth, endPoint);
@@ -113,7 +113,7 @@ public class TicketViewer {
           }
 
           default: {
-            System.out.println("Inavalid Input: Please enter a valid input.");
+            System.out.println("Invalid Input: Please enter a valid input.");
             continue;
           }
         }
@@ -124,7 +124,7 @@ public class TicketViewer {
   }
 
   /*
-   * This method makes the http call using Zendesks API to get ticket data.
+   * This method makes the HTTP call using Zendesk's API to get ticket data.
    * 
    * Parameters: int page = the page number of tickets
    * 
@@ -138,15 +138,15 @@ public class TicketViewer {
       con.setRequestMethod("GET");
       con.setRequestProperty("Authorization", auth);
 
-      // Open a reader for the incoming stream from the http connection
+      // Open a reader for the incoming stream from the HTTP connection
       BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
       String line = br.readLine();
       return line;
 
     } catch (IOException e) {
-      // Handle the API being unavailable or failed authenticaiton and exit the program.
+      // Handle the API being unavailable or failed authentication and exit the program.
       System.out.println(e.getMessage());
-      System.out.println("Connection or authentication has failed. Please try again.");
+      System.out.println("Connection or Authentication has Failed. Please try again.");
 
     }
     return null;
@@ -166,11 +166,11 @@ public class TicketViewer {
     // Get the JSON Array of tickets from the JSON object passed in
     JSONArray arr = obj.getJSONArray("tickets");
 
-    // Parse the ticket json objects
+    // Parse the ticket JSON objects
     for (int i = 0; i < arr.length(); ++i) {
       Ticket ticket = new Ticket();
 
-      // For each of the json objects in the array fill in the ticket data fields
+      // For each of the JSON objects in the array fill in the ticket data fields
       ticket.setCreatedAt(arr.getJSONObject(i).getString("created_at"));
       ticket.setUpdatedAt(arr.getJSONObject(i).getString("updated_at"));
       ticket.setSubject(arr.getJSONObject(i).getString("subject"));
