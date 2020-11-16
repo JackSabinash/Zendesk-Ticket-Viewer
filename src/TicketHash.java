@@ -36,7 +36,7 @@ public class TicketHash {
     System.out.println("Page: " + pageNum);
     int count = 1;
     for (Integer id : tickets.keySet()) {
-      if ((count >= ticketStart) && (count <= ticketEnd)) {
+      if ((count >= ticketStart) && (count < ticketEnd)) {
         System.out.println("Ticket " + id + ": " + tickets.get(id).getSubject());
       }
       ++count;
