@@ -32,15 +32,14 @@ public class TicketHash {
 
     int ticketStart = (((pageNum - 1) * 25) + 1);
     int ticketEnd = ((pageNum) * 25) + 1;
-
-    // If the ticket end exceeds the last ticket set to the last ticket
-    if (ticketEnd > getSize() + 1) {
-      ticketEnd = getSize() + 1;
-    }
-
+    
     System.out.println("Page: " + pageNum);
-    for (int i = ticketStart; i < ticketEnd; ++i) {
-      System.out.println("Ticket " + i + ": " + tickets.get(i).getSubject());
+    int count = 1;
+    for (Integer id : tickets.keySet()) {
+      if ((count >= ticketStart) && (count <= ticketEnd)) {
+        System.out.println("Ticket " + id + ": " + tickets.get(id).getSubject());
+      }
+      ++count;
     }
   }
 
